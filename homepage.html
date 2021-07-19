@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #main {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-gap: 20px;
+        text-align: center;
+        font-size: 20px;
+      }
+      #main > div {
+        border: 2px solid black;
+        margin: 10px;
+        padding: 20px;
+      }
+      #main > div > img {
+        width: 200px;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>The Jwellery Shop</h1>
+    <button onclick="cart()" id="goToCart">Go to cart</button>
+    <button onclick="highToLow()">Sort:High to Low</button>
+    <button onclick="lowToHigh()">Sort:Low to High</button>
+
+    <div id="main"></div>
+  </body>
+</html>
+
+<script>
+  function addItem(e) {
+    let data = e;
+    let main = document.getElementById("main");
+    main.innerHTML = null;
+
+    for (let i = 0; i < data.length; i++) {
+      let div = document.createElement("div");
+      let name = document.createElement("p");
+      let brand = document.createElement("p");
+      let price = document.createElement("p");
+      let image = document.createElement("img");
+      let btn = document.createElement("button");
+
+      name.innerHTML = `Name: ${data[i].name}`;
+      brand.innerHTML = `Brand: ${data[i].brand}`;
+      price.innerHTML = `Price: ${data[i].price}`;
+      image.src = `${data[i].image}`;
+      btn.textContent = "Add to cart";
+
+      div.append(name, image, brand, price, btn);
+      main.append(div);
+      btn.addEventListener("click", function () {
+        addingToCart(data[i]);
+      });
+    }
+  }
+  addItem(JSON.parse(localStorage.getItem("Jwellery")));
+
+  function cart() {
+    window.location.href = "cart.html";
+  }
+
+  function addingToCart(obj) {
+    let arr;
+    arr = localStorage.getItem("JCart");
+
+    if (arr == null) {
+      arr = [];
+    } else {
+      arr = JSON.parse(localStorage.getItem("JCart"));
+    }
+
+    arr.push(obj);
+
+    localStorage.setItem("Jcart", JSON.stringify(arr));
+  }
+
+  function highToLow() {
+    let data = JSON.parse(localStorage.getItem("Jwellery"));
+    data.sort(highTolowShort);
+    addItem(data);
+  }
+
+  function lowToHigh() {
+    let data = JSON.parse(localStorage.getItem("Jwellery"));
+    data.sort(lowToHighSort);
+    addItem(data);
+  }
+
+  function highTolowShort(a, b) {
+    return +b.price - +a.price;
+  }
+
+  function lowToHighSort(a, b) {
+    return +a.price - +b.price;
+  }
+</script>

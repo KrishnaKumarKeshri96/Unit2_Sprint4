@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Provide Address</h1>
+
+    <input id="name" type="text" placeholder="Name" />
+    <input id="address" type="text" placeholder="Address" />
+    <input id="number" type="number" placeholder="Mobile no." />
+    <button onclick="validate()">Proceed</button>
+  </body>
+</html>
+
+<script>
+  function validate() {
+    let name = document.getElementById("name").value;
+    let address = document.getElementById("address").value;
+    let number = document.getElementById("number").value;
+
+    if (name == "") {
+      alert(`Please enter your name`);
+    } else if (address == "") {
+      alert(`Please enter your address`);
+    } else if (number == "") {
+      alert(`please fill your number`);
+    } else if (number.length < 10) {
+      alert(`Please Check your Number`);
+    } else {
+      window.location.href = "payment.html";
+    }
+  }
+</script>
